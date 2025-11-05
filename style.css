@@ -4,12 +4,13 @@
     box-sizing: border-box;
 }
 
-html, body {
+body, html {
     height: 100%;
     overflow: hidden;
     font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(to bottom, #1e3a8a, #3b82f6, #60a5fa);
     transition: background 1s;
+    background: url('images/anhnen.jpg') no-repeat center center;
+    background-size: cover;
 }
 
 .controls {
@@ -17,22 +18,21 @@ html, body {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 10;
     display: flex;
-    gap: 20px;
-    z-index: 100;
+    gap: 15px;
 }
 
 button {
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-size: 1.1em;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: 0.3s;
 }
-
 button:hover {
     background: #93c5fd;
     transform: scale(1.1);
@@ -45,49 +45,55 @@ button:hover {
     overflow: hidden;
 }
 
-/* === Cá và vật thể === */
+/* Cá & vật thể */
 .fish {
     position: absolute;
+    transition: transform 1s;
     user-select: none;
-    pointer-events: none;
 }
 
-/* Dolia to hơn */
+/* Dolia lớn gấp ~5 lần */
 .dolia {
-    width: 260px;
-    top: 55%;
+    width: 220px;
+    top: 50%;
     left: -250px;
     animation: swim-dolia 18s linear infinite;
 }
 
-/* Cá heo */
+/* Cá heo trung bình */
 .caheo {
     width: 180px;
-    top: 70%;
+    top: 65%;
     left: -200px;
-    animation: swim-horizontal 22s linear infinite alternate;
+    animation: swim-left-right 25s linear infinite alternate;
 }
 
-/* Cá nhỏ */
-.ca2, .ca3 {
-    width: 130px;
-    animation: swim-horizontal 20s linear infinite alternate;
+/* Các cá khác nhỏ hơn */
+.ca1, .ca2, .ca3, .ca4, .ca5, .ca6 {
+    width: 120px;
+    top: calc(20% + 50 * var(--i, 1));
+    animation: swim-left-right 20s linear infinite alternate;
 }
+.ca1 { left: 0; }
+.ca2 { left: 70%; }
+.ca3 { left: 30%; }
+.ca4 { left: 50%; }
+.ca5 { left: 20%; }
+.ca6 { left: 80%; }
 
-.ca2 {
-    top: 45%;
-    left: 0;
+/* Rùa, thỏ, tôm */
+.rua, .tholan, .tom {
+    width: 100px;
+    animation: swim-left-right 30s linear infinite alternate;
 }
-
-.ca3 {
-    top: 35%;
-    left: 70%;
-}
+.rua { top: 75%; left: 10%; }
+.tholan { top: 80%; left: 40%; }
+.tom { top: 85%; left: 60%; }
 
 /* Con sứa */
 .consua {
-    width: 120px;
-    top: 25%;
+    width: 100px;
+    top: 20%;
     left: 40%;
     animation: jelly 10s ease-in-out infinite alternate;
 }
@@ -97,25 +103,23 @@ button:hover {
     position: absolute;
     bottom: 0;
     border-radius: 50%;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.5);
     animation: rise 10s linear infinite;
 }
 
-/* === Hiệu ứng === */
+/* Keyframes */
 @keyframes swim-dolia {
-    0% { left: -260px; top: 55%; transform: scaleX(1); }
-    45% { left: 80%; top: 50%; transform: scaleX(1); }
-    50% { transform: scaleX(-1); }
-    95% { left: -260px; top: 60%; transform: scaleX(-1); }
-    100% { transform: scaleX(1); }
+    0% { left: -250px; top: 60%; transform: scaleX(1); }
+    50% { left: 80%; top: 50%; transform: scaleX(1); }
+    51% { transform: scaleX(-1); }
+    100% { left: -250px; top: 60%; transform: scaleX(-1); }
 }
 
-@keyframes swim-horizontal {
-    0% { transform: translateX(0) translateY(0) scaleX(1); }
-    45% { transform: translateX(70vw) translateY(-30px) scaleX(1); }
-    50% { transform: scaleX(-1); }
-    95% { transform: translateX(0) translateY(20px) scaleX(-1); }
-    100% { transform: scaleX(1); }
+@keyframes swim-left-right {
+    0% { transform: translate(0, 0) scaleX(1); }
+    50% { transform: translate(60vw, -20px) scaleX(1); }
+    51% { transform: scaleX(-1); }
+    100% { transform: translate(0, 20px) scaleX(-1); }
 }
 
 @keyframes jelly {

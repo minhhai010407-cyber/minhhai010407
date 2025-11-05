@@ -1,6 +1,7 @@
 body {
   margin: 0;
   overflow: hidden;
+  font-family: sans-serif;
 }
 
 .ocean {
@@ -20,16 +21,16 @@ body {
   transform: translateX(-50%);
   z-index: 20;
   display: flex;
-  gap: 30px;
+  gap: 40px;
 }
 
 button {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   border: 2px solid #fff;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
-  padding: 15px 30px;
+  padding: 18px 35px;
   border-radius: 25px;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.3s;
@@ -40,32 +41,24 @@ button:hover {
   transform: scale(1.1);
 }
 
-/* Cá & vật thể */
+/* Kích thước hình ảnh hợp lý */
 .fish {
   position: absolute;
-  transition: transform 0.3s linear;
   user-select: none;
+  transition: transform 0.3s linear;
 }
 
-/* Kích thước hợp lý */
-.fish1, .fish2, .fish3, .fish4, .caheo, .cakiem {
-  width: 220px;
-}
+/* Kích thước các loài */
+.fish1, .fish2, .fish3, .fish4 { width: 180px; }
+.caheo { width: 220px; }
+.cakiem { width: 250px; }
+.jelly { width: 180px; }
+.dolia { width: 850px; } /* 🐙 to thật sự */
 
-.cakiem { width: 260px; }
-.caheo { width: 300px; }
-
-.jelly {
-  width: 180px;
-  animation: jellyMove 6s ease-in-out infinite;
-}
-
-.dolia {
-  width: 550px; /* To hơn lần trước */
-}
-
-/* Sứa di chuyển lên xuống */
 @keyframes jellyMove {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-120px); }
+  50% { transform: translateY(-100px); }
+}
+.jelly {
+  animation: jellyMove 6s ease-in-out infinite;
 }

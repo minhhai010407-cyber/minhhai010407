@@ -9,77 +9,83 @@ const backgrounds = [
   "images/anhnen2.jpg",
   "images/anhnen3.jpg"
 ];
-let currentBg = 0;
-let musicPlaying = false;
+let bgIndex = 0;
+let playing = false;
 
-// ===== Nút đổi nền =====
+// Đổi nền
 changeBgButton.addEventListener("click", () => {
-  currentBg = (currentBg + 1) % backgrounds.length;
-  ocean.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
+  bgIndex = (bgIndex + 1) % backgrounds.length;
+  ocean.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
 });
 
-// ===== Nút nhạc =====
+// Nhạc
 musicButton.addEventListener("click", () => {
-  if (musicPlaying) {
-    bgMusic.pause();
-  } else {
-    bgMusic.play();
-  }
-  musicPlaying = !musicPlaying;
+  if (playing) bgMusic.pause();
+  else bgMusic.play();
+  playing = !playing;
 });
 
-// ===== Cá di chuyển =====
+// Tạo bong bóng
+function createBubble() {
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  const size = Math.random() * 25 + 10;
+  bubble.style.width = size + "px";
+  bubble.style.height = size + "px";
+  bubble.style.left = Math.random() * 100 + "%";
+  bubble.style.animationDuration = (Math.random() * 5 + 5) + "s";
+  ocean.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 10000);
+}
+setInterval(createBubble, 700);
+
+// Vị trí khởi tạo
 const fishData = [];
 fishes.forEach((fish) => {
-  if (fish.classList.contains("jelly") || fish.classList.contains("dolia")) return;
-  
-  const speed = 0.7 + Math.random() * 1; // tốc độ vừa
-  const directionX = Math.random() < 0.5 ? 1 : -1;
-  const directionY = Math.random() < 0.5 ? 1 : -1;
-  const x = Math.random() * (window.innerWidth - 200);
-  const y = Math.random() * (window.innerHeight - 200);
+  let x = Math.random() * (window.innerWidth - 300);
+  let y = Math.random() * (window.innerHeight - 200);
+  let dx = Math.random() < 0.5 ? 1 : -1;
+  let dy = Math.random() < 0.5 ? 1 : -1;
+  let speed = 0.8 + Math.random() * 0.8;
 
-  fishData.push({ el: fish, x, y, speed, directionX, directionY });
+  if (fish.classList.contains("tholan")) speed = 1.8; // thợ lặn nhanh hơn
+  if (fish.classList.contains("dolia")) speed = 1.2;
+  if (fish.classList.contains("jelly")) return;
+
+  fishData.push({ el: fish, x, y, dx, dy, speed });
 });
 
-function animate() {
+// Chuyển động mượt
+function moveFish() {
   fishData.forEach(f => {
-    f.x += f.speed * f.directionX;
-    f.y += Math.sin(Date.now() / 500) * f.directionY;
+    f.x += f.speed * f.dx;
+    f.y += Math.sin(Date.now()/800) * f.dy * 0.6;
 
     if (f.x < 0 || f.x > window.innerWidth - f.el.width) {
-      f.directionX *= -1;
-      f.el.style.transform = `scaleX(${f.directionX})`;
+      f.dx *= -1;
+      f.el.style.transform = `scaleX(${f.dx})`;
     }
-
-    if (f.y < 0 || f.y > window.innerHeight - f.el.height) {
-      f.directionY *= -1;
-    }
+    if (f.y < 0 || f.y > window.innerHeight - f.el.height) f.dy *= -1;
 
     f.el.style.left = f.x + "px";
     f.el.style.top = f.y + "px";
   });
-  requestAnimationFrame(animate);
+  requestAnimationFrame(moveFish);
 }
 
-// ===== Dolia riêng =====
+// Dolia riêng – to, bơi qua lại nhẹ
 const dolia = document.querySelector(".dolia");
-let dx = 1, dy = 1;
 let doliaX = 100, doliaY = window.innerHeight / 2;
-const doliaSpeed = 1.2;
-
+let dirX = 1, dirY = 1;
 function moveDolia() {
-  doliaX += doliaSpeed * dx;
-  doliaY += 0.6 * dy;
+  doliaX += 1.5 * dirX;
+  doliaY += 0.5 * dirY;
 
   if (doliaX < 0 || doliaX > window.innerWidth - dolia.width) {
-    dx *= -1;
-    dolia.style.transform = `scaleX(${dx})`;
+    dirX *= -1;
+    dolia.style.transform = `scaleX(${dirX})`;
   }
-
-  if (doliaY < 100 || doliaY > window.innerHeight - 350) {
-    dy *= -1;
-  }
+  if (doliaY < 50 || doliaY > window.innerHeight - 400) dirY *= -1;
 
   dolia.style.left = doliaX + "px";
   dolia.style.top = doliaY + "px";
@@ -87,10 +93,5 @@ function moveDolia() {
   requestAnimationFrame(moveDolia);
 }
 
-animate();
+moveFish();
 moveDolia();
-
-// ===== Tự phát nhạc nếu được phép =====
-window.addEventListener("load", () => {
-  bgMusic.play().catch(() => console.log("Nhấn 🎵 để bật nhạc"));
-});

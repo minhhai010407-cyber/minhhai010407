@@ -1,0 +1,139 @@
+/* Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Biển */
+.ocean {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("images/anhnen.jpg") no-repeat center center/cover;
+  overflow: hidden;
+}
+
+/* Hiệu ứng sóng */
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 100%;
+  animation: waveMove 7s linear infinite;
+  opacity: 0.4;
+}
+
+.wave2 {
+  bottom: 10px;
+  opacity: 0.2;
+  animation-delay: 3s;
+}
+
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ---------------- Cá và sinh vật ---------------- */
+.fish {
+  position: absolute;
+  will-change: transform;
+  user-select: none;
+}
+
+/* Cá thường */
+.fish1 {
+  width: 280px;
+  top: 25%;
+  left: -300px;
+  animation: swim 12s linear infinite;
+}
+
+.fish2 {
+  width: 260px;
+  top: 55%;
+  left: -300px;
+  animation: swim 14s linear infinite;
+}
+
+.fish3 {
+  width: 300px;
+  top: 40%;
+  left: -300px;
+  animation: swim 10s linear infinite;
+}
+
+.fish4 {
+  width: 240px;
+  top: 70%;
+  left: -300px;
+  animation: swim 15s linear infinite;
+}
+
+/* Cá heo */
+.dolphin {
+  width: 380px;
+  bottom: 10%;
+  left: -400px;
+  animation: swim 9s linear infinite;
+}
+
+/* Cá kiếm */
+.swordfish {
+  width: 350px;
+  bottom: 20%;
+  left: -400px;
+  animation: swim 8s linear infinite;
+}
+
+/* Sứa */
+.jellyfish {
+  width: 180px;
+  left: 75%;
+  top: 10%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes swim {
+  0% { transform: translateX(0) scaleX(1); opacity: 1; }
+  49% { transform: translateX(100vw) scaleX(1); }
+  50% { transform: translateX(100vw) scaleX(-1); }
+  99% { transform: translateX(0) scaleX(-1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+/* Sứa nổi lên xuống */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-50px); }
+}
+
+/* ---------------- Nút điều khiển ---------------- */
+.controls {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 1000;
+}
+
+button {
+  font-size: 22px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.9);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: rgba(0, 150, 255, 0.9);
+  color: white;
+}

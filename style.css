@@ -1,139 +1,71 @@
-/* Reset */
-body, html {
+body {
   margin: 0;
-  padding: 0;
   overflow: hidden;
 }
 
-/* Biển */
 .ocean {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: url("images/anhnen.jpg") no-repeat center center/cover;
+  background: url('images/anhnen.jpg') no-repeat center center/cover;
+  transition: background-image 1s ease;
   overflow: hidden;
 }
 
-/* Hiệu ứng sóng */
-.wave {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 200%;
-  height: 100px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 100%;
-  animation: waveMove 7s linear infinite;
-  opacity: 0.4;
-}
-
-.wave2 {
-  bottom: 10px;
-  opacity: 0.2;
-  animation-delay: 3s;
-}
-
-@keyframes waveMove {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* ---------------- Cá và sinh vật ---------------- */
-.fish {
-  position: absolute;
-  will-change: transform;
-  user-select: none;
-}
-
-/* Cá thường */
-.fish1 {
-  width: 280px;
-  top: 25%;
-  left: -300px;
-  animation: swim 12s linear infinite;
-}
-
-.fish2 {
-  width: 260px;
-  top: 55%;
-  left: -300px;
-  animation: swim 14s linear infinite;
-}
-
-.fish3 {
-  width: 300px;
-  top: 40%;
-  left: -300px;
-  animation: swim 10s linear infinite;
-}
-
-.fish4 {
-  width: 240px;
-  top: 70%;
-  left: -300px;
-  animation: swim 15s linear infinite;
-}
-
-/* Cá heo */
-.dolphin {
-  width: 380px;
-  bottom: 10%;
-  left: -400px;
-  animation: swim 9s linear infinite;
-}
-
-/* Cá kiếm */
-.swordfish {
-  width: 350px;
-  bottom: 20%;
-  left: -400px;
-  animation: swim 8s linear infinite;
-}
-
-/* Sứa */
-.jellyfish {
-  width: 180px;
-  left: 75%;
-  top: 10%;
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes swim {
-  0% { transform: translateX(0) scaleX(1); opacity: 1; }
-  49% { transform: translateX(100vw) scaleX(1); }
-  50% { transform: translateX(100vw) scaleX(-1); }
-  99% { transform: translateX(0) scaleX(-1); }
-  100% { transform: translateX(0) scaleX(1); }
-}
-
-/* Sứa nổi lên xuống */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-50px); }
-}
-
-/* ---------------- Nút điều khiển ---------------- */
+/* Nút điều khiển */
 .controls {
-  position: fixed;
-  top: 20px;
+  position: absolute;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 20;
   display: flex;
-  gap: 20px;
-  z-index: 1000;
+  gap: 30px;
 }
 
 button {
-  font-size: 22px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 26px;
+  font-weight: bold;
   padding: 15px 30px;
-  border: none;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.9);
+  border-radius: 25px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: transform 0.2s ease, background-color 0.3s;
 }
 
 button:hover {
-  background: rgba(0, 150, 255, 0.9);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Cá & vật thể */
+.fish {
+  position: absolute;
+  transition: transform 0.3s linear;
+  user-select: none;
+}
+
+/* Kích thước hợp lý */
+.fish1, .fish2, .fish3, .fish4, .caheo, .cakiem {
+  width: 220px;
+}
+
+.cakiem { width: 260px; }
+.caheo { width: 300px; }
+
+.jelly {
+  width: 180px;
+  animation: jellyMove 6s ease-in-out infinite;
+}
+
+.dolia {
+  width: 550px; /* To hơn lần trước */
+}
+
+/* Sứa di chuyển lên xuống */
+@keyframes jellyMove {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-120px); }
 }

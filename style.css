@@ -1,95 +1,163 @@
 body {
-  margin: 0;
-  overflow: hidden;
-  background: #001f3f;
-  font-family: sans-serif;
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #1e3a8a, #3b82f6, #60a5fa);
+    font-family: "Comic Sans MS", sans-serif;
+    color: white;
+    height: 100vh;
 }
 
-/* Nút điều khiển */
+.title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(0, 0, 50, 0.3);
+    border-radius: 0 0 20px 20px;
+}
+
 .controls {
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  gap: 30px;
+    position: absolute;
+    top: 80px;
+    right: 50%;
+    transform: translateX(50%);
+    display: flex;
+    gap: 20px;
+    z-index: 20;
 }
+
 button {
-  background-color: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  border: 2px solid #fff;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 15px 25px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #facc15;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    transition: transform 0.3s, background 0.3s;
 }
+
 button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+    transform: scale(1.1);
+    background: #fbbf24;
 }
 
-/* Đại dương */
 .ocean {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: url('images/anhnen.jpg') no-repeat center/cover;
-  position: relative;
-  transition: background-image 1s ease-in-out;
-}
-
-/* Rong biển */
-.seaweed {
-  position: absolute;
-  bottom: 0;
-  width: 40px;
-  height: 200px;
-  background: linear-gradient(to top, #064e3b, #10b981);
-  border-radius: 20px;
-  animation: wave 4s ease-in-out infinite;
-}
-@keyframes wave {
-  0%,100% { transform: rotate(0deg); }
-  50% { transform: rotate(6deg); }
-}
-.seaweed:nth-child(1){left:10%;}
-.seaweed:nth-child(2){left:30%;}
-.seaweed:nth-child(3){left:50%;}
-.seaweed:nth-child(4){left:70%;}
-.seaweed:nth-child(5){left:90%;}
-
-/* Cá */
-.fish {
-  position: absolute;
-  user-select: none;
-}
-.fish1, .fish2, .fish3, .fish4 { width: 160px; }
-.caheo { width: 240px; }
-.cakiem { width: 250px; }
-.jelly { width: 130px; animation: jellyFloat 6s ease-in-out infinite; }
-.rua { width: 200px; }
-.tom { width: 120px; }
-.tholan { width: 220px; }
-.dolia { width: 1000px; opacity: 0.9; }
-
-/* Sứa bơi lên xuống */
-@keyframes jellyFloat {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-80px); }
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Bong bóng */
 .bubble {
-  position: absolute;
-  bottom: 0;
-  background: rgba(255,255,255,0.6);
-  border-radius: 50%;
-  animation: bubbleRise linear forwards;
+    position: absolute;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: rise 8s linear infinite;
 }
-@keyframes bubbleRise {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-110vh); opacity: 0; }
+@keyframes rise {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+}
+
+/* Cá chuyển động tổng quát */
+.fish {
+    position: absolute;
+    will-change: transform;
+    user-select: none;
+}
+
+/* Cá lớn dolia */
+.dolia {
+    width: 500px;
+    top: 40%;
+    left: 10%;
+    animation: doliaSwim 14s ease-in-out infinite alternate;
+}
+@keyframes doliaSwim {
+    0% { transform: translateX(0) translateY(0) scaleX(1); }
+    50% { transform: translateX(70vw) translateY(30px) scaleX(1); }
+    100% { transform: translateX(0) translateY(-30px) scaleX(-1); }
+}
+
+/* Rùa */
+.rua {
+    width: 180px;
+    top: 70%;
+    left: 5%;
+    animation: swimLR 22s linear infinite alternate;
+}
+
+/* Cá heo */
+.caheo {
+    width: 250px;
+    top: 20%;
+    left: 30%;
+    animation: swimUD 18s ease-in-out infinite alternate;
+}
+
+/* Cá kiếm */
+.cakiem {
+    width: 220px;
+    top: 55%;
+    left: 10%;
+    animation: swimLR 16s linear infinite alternate;
+}
+
+/* Các cá nhỏ */
+.ca1, .ca2, .ca3, .ca4 {
+    width: 120px;
+    animation: swimUD 14s ease-in-out infinite alternate;
+}
+.ca1 { top: 30%; left: 5%; }
+.ca2 { top: 60%; left: 25%; animation-delay: 2s; }
+.ca3 { top: 40%; left: 50%; animation-delay: 4s; }
+.ca4 { top: 70%; left: 75%; animation-delay: 6s; }
+
+/* Thợ lặn */
+.tholan {
+    width: 200px;
+    top: 50%;
+    left: 10%;
+    animation: diverExplore 20s ease-in-out infinite alternate;
+}
+@keyframes diverExplore {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(30vw, 10vh) rotate(15deg); }
+    50% { transform: translate(60vw, -5vh) rotate(-10deg); }
+    75% { transform: translate(80vw, 20vh) rotate(10deg); }
+    100% { transform: translate(0, 0) rotate(-5deg); }
+}
+
+/* Tôm */
+.tom {
+    width: 150px;
+    top: 80%;
+    left: 30%;
+    animation: swimLR 12s linear infinite alternate;
+}
+
+/* Sứa */
+.consua {
+    width: 180px;
+    top: 15%;
+    left: 60%;
+    animation: float 6s ease-in-out infinite alternate;
+}
+
+/* Hiệu ứng chung */
+@keyframes swimLR {
+    from { transform: translateX(0) scaleX(1); }
+    to { transform: translateX(70vw) scaleX(-1); }
+}
+@keyframes swimUD {
+    from { transform: translateY(0); }
+    to { transform: translateY(40px); }
+}
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(60px); }
 }

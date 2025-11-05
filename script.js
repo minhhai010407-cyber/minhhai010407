@@ -1,3 +1,4 @@
+// Nhạc
 const music = document.getElementById("music");
 let playing = false;
 
@@ -11,6 +12,7 @@ function toggleMusic() {
     }
 }
 
+// Đổi nền
 const backgrounds = [
     'linear-gradient(to bottom, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%)',
     'linear-gradient(to bottom, #0f766e, #14b8a6, #99f6e4)',
@@ -25,6 +27,7 @@ function changeBackground() {
     document.body.style.background = backgrounds[currentIndex];
 }
 
+// Bong bóng tự tạo
 function createBubble() {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -32,10 +35,10 @@ function createBubble() {
     bubble.style.width = size + 'px';
     bubble.style.height = size + 'px';
     bubble.style.left = Math.random() * 100 + '%';
-    bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    bubble.style.animationDuration = (Math.random() * 4 + 5) + 's';
     document.querySelector('.ocean').appendChild(bubble);
 
-    setTimeout(() => bubble.remove(), 10000);
+    setTimeout(() => bubble.remove(), 9000);
 }
 
 setInterval(createBubble, 500);

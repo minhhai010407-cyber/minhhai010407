@@ -1,5 +1,5 @@
 const ocean = document.querySelector(".ocean");
-const fishElements = document.querySelectorAll(".fish");
+const fishes = document.querySelectorAll(".fish");
 const changeBgButton = document.getElementById("change-bg");
 const musicButton = document.getElementById("toggle-music");
 const bgMusic = document.getElementById("bg-music");
@@ -12,13 +12,13 @@ const backgrounds = [
 let currentBg = 0;
 let musicPlaying = false;
 
-/* === CHUYỂN NỀN === */
+/* === Nút đổi nền === */
 changeBgButton.addEventListener("click", () => {
   currentBg = (currentBg + 1) % backgrounds.length;
   ocean.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
 });
 
-/* === PHÁT / DỪNG NHẠC === */
+/* === Nút nhạc === */
 musicButton.addEventListener("click", () => {
   if (musicPlaying) {
     bgMusic.pause();
@@ -28,40 +28,34 @@ musicButton.addEventListener("click", () => {
   musicPlaying = !musicPlaying;
 });
 
-/* === DI CHUYỂN CÁ === */
-const fishes = [];
+/* === Thiết lập chuyển động cho từng cá === */
+const fishData = [];
 
-fishElements.forEach((fish, index) => {
-  let speed = 1 + Math.random() * 2;
-  let directionX = Math.random() < 0.5 ? 1 : -1;
-  let directionY = Math.random() < 0.5 ? 1 : -1;
-  let x = Math.random() * window.innerWidth * 0.8;
-  let y = Math.random() * window.innerHeight * 0.8;
-  let amplitude = 30 + Math.random() * 20;
+fishes.forEach((fish) => {
+  if (fish.classList.contains("jelly")) return; // sứa có CSS riêng
 
-  fishes.push({ el: fish, x, y, speed, directionX, directionY, amplitude });
+  const speed = 0.8 + Math.random() * 1.2; // tốc độ vừa phải
+  const directionX = Math.random() < 0.5 ? 1 : -1;
+  const directionY = Math.random() < 0.5 ? 1 : -1;
+  const x = Math.random() * (window.innerWidth - 200);
+  const y = Math.random() * (window.innerHeight - 200);
+  const amplitude = 50 + Math.random() * 30; // dao động lên xuống
+
+  fishData.push({ el: fish, x, y, speed, directionX, directionY, amplitude });
 });
 
-/* Dolia đặc biệt: bơi qua lại + lên xuống */
-const dolia = document.querySelector(".dolia");
-let doliaX = 100, doliaY = window.innerHeight / 2, doliaDirX = 1, doliaDirY = 1;
-const doliaSpeed = 2;
-
-/* === CẬP NHẬT VỊ TRÍ === */
 function animate() {
-  fishes.forEach(f => {
-    if (f.el.classList.contains("dolia")) return; // dolia xử lý riêng
-    if (f.el.classList.contains("jelly")) return; // sứa xử lý bằng CSS
-
+  fishData.forEach(f => {
+    // Cập nhật vị trí
     f.x += f.speed * f.directionX;
-    f.y += Math.sin(Date.now() / 500) * 0.5 * f.directionY;
+    f.y += Math.sin(Date.now() / 1000) * 0.7 * f.directionY;
 
-    // Quay đầu khi đụng tường
-    if (f.x < 0 || f.x > window.innerWidth - 200) {
+    // Quay đầu khi chạm biên
+    if (f.x < 0 || f.x > window.innerWidth - f.el.width) {
       f.directionX *= -1;
       f.el.style.transform = `scaleX(${f.directionX})`;
     }
-    if (f.y < 0 || f.y > window.innerHeight - 200) {
+    if (f.y < 0 || f.y > window.innerHeight - f.el.height) {
       f.directionY *= -1;
     }
 
@@ -69,27 +63,37 @@ function animate() {
     f.el.style.top = f.y + "px";
   });
 
-  // Dolia di chuyển riêng: bơi ngang + lên xuống
-  doliaX += doliaSpeed * doliaDirX;
-  doliaY += 1.5 * doliaDirY;
+  requestAnimationFrame(animate);
+}
 
-  if (doliaX < 0 || doliaX > window.innerWidth - 700) {
-    doliaDirX *= -1;
-    dolia.style.transform = `scaleX(${doliaDirX})`;
+/* === Dolia riêng: bơi qua lại + lên xuống === */
+const dolia = document.querySelector(".dolia");
+let dx = 1, dy = 1;
+let doliaX = 100, doliaY = window.innerHeight / 2;
+const doliaSpeed = 1.5;
+
+function moveDolia() {
+  doliaX += doliaSpeed * dx;
+  doliaY += 0.8 * dy;
+
+  if (doliaX < 0 || doliaX > window.innerWidth - 550) {
+    dx *= -1;
+    dolia.style.transform = `scaleX(${dx})`;
   }
-  if (doliaY < 100 || doliaY > window.innerHeight - 250) {
-    doliaDirY *= -1;
+  if (doliaY < 100 || doliaY > window.innerHeight - 300) {
+    dy *= -1;
   }
 
   dolia.style.left = doliaX + "px";
   dolia.style.top = doliaY + "px";
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(moveDolia);
 }
 
 animate();
+moveDolia();
 
-/* Tự động phát nhạc nếu được phép */
+/* Tự phát nhạc nếu được phép */
 window.addEventListener("load", () => {
   bgMusic.play().catch(() => console.log("Nhấn 🎵 để bật nhạc."));
 });

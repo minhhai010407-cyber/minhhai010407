@@ -3,34 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hồ Cá Vui Nhộn</title>
+  <title>Thủy cung của Minh Hải</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ocean">
-    <!-- Sóng biển -->
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-
-    <!-- Các sinh vật biển -->
-    <img src="images/c1.png" class="fish fish1">
-    <img src="images/ca2.png" class="fish fish2">
-    <img src="images/ca3.png" class="fish fish3">
-    <img src="images/ca4.png" class="fish fish4">
-    <img src="images/caheo.png" class="fish dolphin">
-    <img src="images/cakiem.png" class="fish swordfish">
-    <img src="images/consua.png" class="fish jellyfish">
-  </div>
-
-  <!-- Nút điều khiển -->
   <div class="controls">
-    <button id="changeBackground">🌅 ĐỔI CẢNH</button>
-    <button id="toggleMusic">🎵 PHÁT / DỪNG NHẠC</button>
-    <button id="changeMusic">🎶 ĐỔI BÀI</button>
+    <button id="change-bg">🌅 Đổi nền</button>
+    <button id="toggle-music">🎵 Nhạc nền</button>
   </div>
 
-  <!-- Nhạc nền -->
-  <audio id="bgMusic" src="music/nhac1.mp3" loop></audio>
+  <div class="ocean">
+    <img src="images/c1.png" class="fish fish1" alt="Cá 1">
+    <img src="images/ca2.png" class="fish fish2" alt="Cá 2">
+    <img src="images/ca3.png" class="fish fish3" alt="Cá 3">
+    <img src="images/ca4.png" class="fish fish4" alt="Cá 4">
+    <img src="images/caheo.png" class="fish caheo" alt="Cá heo">
+    <img src="images/cakiem.png" class="fish cakiem" alt="Cá kiếm">
+    <img src="images/consua.png" class="fish jelly" alt="Sứa">
+    <img src="images/dolia.png" class="fish dolia" alt="Dolia">
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="music/nhac1.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>

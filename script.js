@@ -1,80 +1,60 @@
-// ---------- NHẠC ----------
-const music = document.getElementById("music");
-let playing = false;
-
-function toggleMusic() {
-    if (!playing) {
-        music.play();
-        playing = true;
-    } else {
-        music.pause();
-        playing = false;
-    }
-}
-
-// ---------- NỀN ----------
-const backgrounds = [
-    'images/anhnen.jpg',
-    'images/anhnen2.jpg',
-    'images/anhnen3.jpg'
-];
-let currentIndex = 0;
+// Danh sách nền
+const backgrounds = ["anhnen.jpg", "anhnen2.jpg", "anhnen3.jpg"];
+let currentBg = 0;
 
 function changeBackground() {
-    currentIndex = (currentIndex + 1) % backgrounds.length;
-    document.body.style.backgroundImage = `url('${backgrounds[currentIndex]}')`;
+    currentBg = (currentBg + 1) % backgrounds.length;
+    document.getElementById("aquarium").style.backgroundImage = `url('${backgrounds[currentBg]}')`;
 }
 
-// ---------- CÁ DI CHUYỂN NGẪU NHIÊN ----------
-const fishes = document.querySelectorAll('.fish');
+// Nhạc
+const music = document.getElementById("music");
+let isPlaying = false;
 
+function toggleMusic() {
+    if (isPlaying) {
+        music.pause();
+    } else {
+        music.play();
+    }
+    isPlaying = !isPlaying;
+}
+
+// Chuyển động cá
+const fishes = document.querySelectorAll('.fish');
+const aquarium = document.getElementById('aquarium');
+
+// Tạo dữ liệu chuyển động
 const fishData = Array.from(fishes).map(fish => ({
     el: fish,
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    vx: (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1),
-    vy: (Math.random() * 1 + 0.5) * (Math.random() < 0.5 ? -1 : 1),
-    speed: fish.classList.contains('dolia') ? 0.7 : (Math.random() * 1.5 + 0.5),
+    x: Math.random() * (window.innerWidth - 100),
+    y: Math.random() * (window.innerHeight - 100),
+    dx: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
+    dy: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
 }));
 
-function moveFish() {
+function animate() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
     fishData.forEach(fish => {
-        fish.x += fish.vx * fish.speed;
-        fish.y += fish.vy * fish.speed;
+        fish.x += fish.dx;
+        fish.y += fish.dy;
 
-        // Giới hạn trong khung, chạm mép thì đổi hướng
-        if (fish.x <= 0 || fish.x + 150 >= window.innerWidth) {
-            fish.vx *= -1;
-            fish.el.style.transform = `scaleX(${fish.vx > 0 ? 1 : -1})`;
+        // Va chạm tường
+        if (fish.x <= 0 || fish.x >= w - 100) {
+            fish.dx *= -1;
+            fish.el.style.transform = fish.dx > 0 ? 'scaleX(1)' : 'scaleX(-1)';
         }
-        if (fish.y <= 0 || fish.y + 150 >= window.innerHeight) {
-            fish.vy *= -1;
-        }
-
-        // Thay đổi nhẹ hướng để cá không đi thẳng mãi
-        if (Math.random() < 0.02) {
-            fish.vx += (Math.random() - 0.5) * 0.5;
-            fish.vy += (Math.random() - 0.5) * 0.5;
+        if (fish.y <= 0 || fish.y >= h - 100) {
+            fish.dy *= -1;
         }
 
-        fish.el.style.left = fish.x + 'px';
-        fish.el.style.top = fish.y + 'px';
+        fish.el.style.left = fish.x + "px";
+        fish.el.style.top = fish.y + "px";
     });
 
-    requestAnimationFrame(moveFish);
+    requestAnimationFrame(animate);
 }
-moveFish();
 
-// ---------- BONG BÓNG ----------
-function createBubble() {
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    const size = Math.random() * 20 + 10;
-    bubble.style.width = size + 'px';
-    bubble.style.height = size + 'px';
-    bubble.style.left = Math.random() * 100 + '%';
-    bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
-    document.querySelector('.ocean').appendChild(bubble);
-    setTimeout(() => bubble.remove(), 10000);
-}
-setInterval(createBubble, 500);
+animate();

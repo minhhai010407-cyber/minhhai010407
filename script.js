@@ -1,60 +1,72 @@
-// Danh sách nền
-const backgrounds = ["anhnen.jpg", "anhnen2.jpg", "anhnen3.jpg"];
-let currentBg = 0;
-
-function changeBackground() {
-    currentBg = (currentBg + 1) % backgrounds.length;
-    document.getElementById("aquarium").style.backgroundImage = `url('${backgrounds[currentBg]}')`;
-}
-
-// Nhạc
+const aquarium = document.getElementById("aquarium");
+const fishes = document.querySelectorAll(".fish");
+const dolia = document.getElementById("dolia");
 const music = document.getElementById("music");
-let isPlaying = false;
+const bgList = ["images/anhnen.jpg", "images/anhnen2.jpg", "images/anhnen3.jpg"];
+let bgIndex = 0;
+let speedFactor = 0.5; // 🔹 tốc độ mặc định (0.5 là chậm đẹp)
+let directions = [];
 
-function toggleMusic() {
-    if (isPlaying) {
-        music.pause();
-    } else {
-        music.play();
-    }
-    isPlaying = !isPlaying;
+// Khởi tạo vị trí và hướng ngẫu nhiên
+fishes.forEach((fish, i) => {
+  fish.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+  fish.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
+
+  directions[i] = {
+    dx: (Math.random() * 2 - 1) * speedFactor,
+    dy: (Math.random() * 2 - 1) * speedFactor
+  };
+});
+
+// Cập nhật chuyển động
+function animateFish() {
+  fishes.forEach((fish, i) => {
+    let rect = fish.getBoundingClientRect();
+    let x = rect.left + directions[i].dx;
+    let y = rect.top + directions[i].dy;
+
+    // Va chạm tường thì đảo hướng
+    if (x <= 0 || x >= window.innerWidth - rect.width) directions[i].dx *= -1;
+    if (y <= 0 || y >= window.innerHeight - rect.height) directions[i].dy *= -1;
+
+    fish.style.left = `${x}px`;
+    fish.style.top = `${y}px`;
+
+    // Lật hướng cá
+    fish.style.transform = directions[i].dx > 0 ? "scaleX(1)" : "scaleX(-1)";
+  });
+  requestAnimationFrame(animateFish);
 }
+animateFish();
 
-// Chuyển động cá
-const fishes = document.querySelectorAll('.fish');
-const aquarium = document.getElementById('aquarium');
+// Đổi nền
+document.getElementById("changeBackground").addEventListener("click", () => {
+  bgIndex = (bgIndex + 1) % bgList.length;
+  aquarium.style.backgroundImage = `url('${bgList[bgIndex]}')`;
+});
 
-// Tạo dữ liệu chuyển động
-const fishData = Array.from(fishes).map(fish => ({
-    el: fish,
-    x: Math.random() * (window.innerWidth - 100),
-    y: Math.random() * (window.innerHeight - 100),
-    dx: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
-    dy: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
-}));
+// Phát / Dừng nhạc
+document.getElementById("toggleMusic").addEventListener("click", () => {
+  if (music.paused) music.play();
+  else music.pause();
+});
 
-function animate() {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+// Điều chỉnh tốc độ
+document.getElementById("speedUp").addEventListener("click", () => {
+  speedFactor *= 1.3;
+  updateSpeed();
+});
 
-    fishData.forEach(fish => {
-        fish.x += fish.dx;
-        fish.y += fish.dy;
+document.getElementById("speedDown").addEventListener("click", () => {
+  speedFactor /= 1.3;
+  updateSpeed();
+});
 
-        // Va chạm tường
-        if (fish.x <= 0 || fish.x >= w - 100) {
-            fish.dx *= -1;
-            fish.el.style.transform = fish.dx > 0 ? 'scaleX(1)' : 'scaleX(-1)';
-        }
-        if (fish.y <= 0 || fish.y >= h - 100) {
-            fish.dy *= -1;
-        }
-
-        fish.el.style.left = fish.x + "px";
-        fish.el.style.top = fish.y + "px";
-    });
-
-    requestAnimationFrame(animate);
+function updateSpeed() {
+  fishes.forEach((_, i) => {
+    let signX = Math.sign(directions[i].dx);
+    let signY = Math.sign(directions[i].dy);
+    directions[i].dx = signX * (Math.random() * 1 + 0.5) * speedFactor;
+    directions[i].dy = signY * (Math.random() * 1 + 0.5) * speedFactor;
+  });
 }
-
-animate();

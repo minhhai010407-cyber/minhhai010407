@@ -10,28 +10,27 @@ function changeBackground() {
 // Nhạc
 const music = document.getElementById("music");
 let isPlaying = false;
+
 function toggleMusic() {
-    if (isPlaying) music.pause(); else music.play();
+    if (isPlaying) {
+        music.pause();
+    } else {
+        music.play();
+    }
     isPlaying = !isPlaying;
 }
 
-// Cá bơi
+// Chuyển động cá
 const fishes = document.querySelectorAll('.fish');
 const aquarium = document.getElementById('aquarium');
 
-// Biến điều chỉnh tốc độ tổng thể
-let speedMultiplier = 1.0;
-function updateSpeed(value) {
-    speedMultiplier = parseFloat(value);
-}
-
-// Dữ liệu chuyển động ban đầu
+// Tạo dữ liệu chuyển động
 const fishData = Array.from(fishes).map(fish => ({
     el: fish,
     x: Math.random() * (window.innerWidth - 100),
     y: Math.random() * (window.innerHeight - 100),
-    dx: (Math.random() * 0.3 + 0.1) * (Math.random() < 0.5 ? 1 : -1),
-    dy: (Math.random() * 0.3 + 0.1) * (Math.random() < 0.5 ? 1 : -1),
+    dx: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
+    dy: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
 }));
 
 function animate() {
@@ -39,8 +38,8 @@ function animate() {
     const h = window.innerHeight;
 
     fishData.forEach(fish => {
-        fish.x += fish.dx * speedMultiplier;
-        fish.y += fish.dy * speedMultiplier;
+        fish.x += fish.dx;
+        fish.y += fish.dy;
 
         // Va chạm tường
         if (fish.x <= 0 || fish.x >= w - 100) {

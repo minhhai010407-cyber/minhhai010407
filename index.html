@@ -1,34 +1,39 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ Cá</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Cá Ảo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio id="music" src="nhac1.mp3" loop></audio>
-    <div id="aquarium">
-        <!-- Các sinh vật -->
-        <img src="c1.png" class="fish" alt="">
-        <img src="ca2.png" class="fish" alt="">
-        <img src="ca3.png" class="fish" alt="">
-        <img src="ca4.png" class="fish" alt="">
-        <img src="ca4 (2).png" class="fish" alt="">
-        <img src="caheo.png" class="fish" alt="">
-        <img src="consua.png" class="fish" alt="">
-        <img src="tholan.png" class="fish" alt="">
-        <img src="tom.png" class="fish" alt="">
-        <img src="rua.png" class="fish" alt="">
-        <!-- Dolia to hơn, nằm giữa -->
-        <img src="dolia.png" id="dolia" alt="">
-    </div>
+  <div id="aquarium">
+    <!-- Dolia ở giữa -->
+    <img src="images/dolia.png" id="dolia" alt="Dolia">
 
+    <!-- Các sinh vật -->
+    <img src="images/c1.png" class="fish">
+    <img src="images/ca2.png" class="fish">
+    <img src="images/ca3.png" class="fish">
+    <img src="images/ca4.png" class="fish">
+    <img src="images/ca4 (2).png" class="fish">
+    <img src="images/caheo.png" class="fish">
+    <img src="images/consua.png" class="fish">
+    <img src="images/rua.png" class="fish">
+    <img src="images/tholan.png" class="fish">
+    <img src="images/tom.png" class="fish">
+
+    <!-- Nút điều khiển -->
     <div class="controls">
-        <button onclick="changeBackground()">Đổi nền</button>
-        <button onclick="toggleMusic()">Phát / Dừng nhạc</button>
+      <button id="changeBackground">Đổi nền</button>
+      <button id="toggleMusic">Phát / Dừng nhạc</button>
+      <button id="speedDown">Giảm tốc</button>
+      <button id="speedUp">Tăng tốc</button>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <audio id="music" src="nhac1.mp3" loop></audio>
+
+  <script src="script.js"></script>
 </body>
 </html>

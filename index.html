@@ -20,13 +20,15 @@
         <img src="tholan.png" class="fish" alt="">
         <img src="tom.png" class="fish" alt="">
         <img src="rua.png" class="fish" alt="">
-        <!-- Dolia to hơn, nằm giữa -->
+        <!-- Dolia to và giữa -->
         <img src="dolia.png" id="dolia" alt="">
     </div>
 
     <div class="controls">
         <button onclick="changeBackground()">Đổi nền</button>
         <button onclick="toggleMusic()">Phát / Dừng nhạc</button>
+        <label for="speedRange">Tốc độ:</label>
+        <input type="range" id="speedRange" min="0.2" max="3" step="0.1" value="1" oninput="updateSpeed(this.value)">
     </div>
 
     <script src="script.js"></script>

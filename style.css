@@ -24,32 +24,29 @@ body {
 
 #dolia {
     position: absolute;
-    width: 300px; /* to hơn */
+    width: 320px;            /* 🔹 To hơn rõ rệt */
+    max-width: 30vw;         /* 🔹 Tự co theo màn hình lớn */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
+    opacity: 0.95;           /* 🔹 Nhẹ nhàng hơn, không che cá hoàn toàn */
+    animation: float 6s ease-in-out infinite alternate; /* 🔹 Hiệu ứng lắc nhẹ */
 }
+
 
 .controls {
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 15px;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    font-family: sans-serif;
-    background: rgba(0,0,0,0.4);
-    padding: 10px 20px;
-    border-radius: 15px;
 }
 
 button {
     padding: 10px 15px;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.5);
     border: 1px solid white;
     color: white;
     font-weight: bold;
@@ -60,7 +57,8 @@ button {
 button:hover {
     background: rgba(255,255,255,0.2);
 }
-
-#speedRange {
-    width: 120px;
+@keyframes float {
+    0%   { transform: translate(-50%, -50%) translateY(0); }
+    50%  { transform: translate(-50%, -50%) translateY(-10px); }
+    100% { transform: translate(-50%, -50%) translateY(0); }
 }

@@ -45,57 +45,22 @@ button:hover {
     overflow: hidden;
 }
 
-/* Cá & vật thể */
+/* Cá */
 .fish {
     position: absolute;
-    transition: transform 1s;
     user-select: none;
+    will-change: transform;
+    transition: transform 0.3s linear;
 }
 
-/* Dolia lớn gấp ~5 lần */
+/* Dolia to hơn */
 .dolia {
-    width: 220px;
-    top: 50%;
-    left: -250px;
-    animation: swim-dolia 18s linear infinite;
+    width: 380px;
 }
 
-/* Cá heo trung bình */
-.caheo {
-    width: 180px;
-    top: 65%;
-    left: -200px;
-    animation: swim-left-right 25s linear infinite alternate;
-}
-
-/* Các cá khác nhỏ hơn */
-.ca1, .ca2, .ca3, .ca4, .ca5, .ca6 {
+/* Cá khác kích thước nhỏ hơn */
+.caheo, .ca1, .ca2, .ca3, .ca4, .ca5, .ca6, .rua, .tholan, .tom, .consua {
     width: 120px;
-    top: calc(20% + 50 * var(--i, 1));
-    animation: swim-left-right 20s linear infinite alternate;
-}
-.ca1 { left: 0; }
-.ca2 { left: 70%; }
-.ca3 { left: 30%; }
-.ca4 { left: 50%; }
-.ca5 { left: 20%; }
-.ca6 { left: 80%; }
-
-/* Rùa, thỏ, tôm */
-.rua, .tholan, .tom {
-    width: 100px;
-    animation: swim-left-right 30s linear infinite alternate;
-}
-.rua { top: 75%; left: 10%; }
-.tholan { top: 80%; left: 40%; }
-.tom { top: 85%; left: 60%; }
-
-/* Con sứa */
-.consua {
-    width: 100px;
-    top: 20%;
-    left: 40%;
-    animation: jelly 10s ease-in-out infinite alternate;
 }
 
 /* Bong bóng */
@@ -105,27 +70,6 @@ button:hover {
     border-radius: 50%;
     background: rgba(255,255,255,0.5);
     animation: rise 10s linear infinite;
-}
-
-/* Keyframes */
-@keyframes swim-dolia {
-    0% { left: -250px; top: 60%; transform: scaleX(1); }
-    50% { left: 80%; top: 50%; transform: scaleX(1); }
-    51% { transform: scaleX(-1); }
-    100% { left: -250px; top: 60%; transform: scaleX(-1); }
-}
-
-@keyframes swim-left-right {
-    0% { transform: translate(0, 0) scaleX(1); }
-    50% { transform: translate(60vw, -20px) scaleX(1); }
-    51% { transform: scaleX(-1); }
-    100% { transform: translate(0, 20px) scaleX(-1); }
-}
-
-@keyframes jelly {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(50px); }
-    100% { transform: translateY(0); }
 }
 
 @keyframes rise {

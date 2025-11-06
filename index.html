@@ -3,34 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌊 Hồ Cá 🌊</title>
+    <title>Bể Cá Mini</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <audio id="music" src="nhac1.mp3" loop></audio>
+    <div id="aquarium">
+        <!-- Các sinh vật -->
+        <img src="c1.png" class="fish" alt="">
+        <img src="ca2.png" class="fish" alt="">
+        <img src="ca3.png" class="fish" alt="">
+        <img src="ca4.png" class="fish" alt="">
+        <img src="ca4 (2).png" class="fish" alt="">
+        <img src="caheo.png" class="fish" alt="">
+        <img src="consua.png" class="fish" alt="">
+        <img src="tholan.png" class="fish" alt="">
+        <img src="tom.png" class="fish" alt="">
+        <img src="rua.png" class="fish" alt="">
+        <!-- Dolia to hơn, nằm giữa -->
+        <img src="dolia.png" id="dolia" alt="">
+    </div>
+
     <div class="controls">
-        <button onclick="changeBackground()">🎨 Đổi nền</button>
-        <button onclick="toggleMusic()">🎵 Nhạc</button>
+        <button onclick="changeBackground()">Đổi nền</button>
+        <button onclick="toggleMusic()">Phát / Dừng nhạc</button>
     </div>
-
-    <div class="ocean">
-        <!-- Các sinh vật biển -->
-        <img src="images/dolia.png" class="fish dolia" alt="Dolia">
-        <img src="images/caheo.png" class="fish caheo" alt="Cá Heo">
-        <img src="images/c1.png" class="fish ca1" alt="Cá 1">
-        <img src="images/ca2.png" class="fish ca2" alt="Cá 2">
-        <img src="images/ca3.png" class="fish ca3" alt="Cá 3">
-        <img src="images/ca4.png" class="fish ca4" alt="Cá 4">
-        <img src="images/ca4 (2).png" class="fish ca5" alt="Cá 5">
-        <img src="images/caheo.png" class="fish ca6" alt="Cá Heo 2">
-        <img src="images/consua.png" class="fish consua" alt="Con Sứa">
-        <img src="images/rua.png" class="fish rua" alt="Rùa">
-        <img src="images/tholan.png" class="fish tholan" alt="Thỏ Lặn">
-        <img src="images/tom.png" class="fish tom" alt="Tôm">
-    </div>
-
-    <audio id="music" loop>
-        <source src="music/nhac1.mp3" type="audio/mpeg">
-    </audio>
 
     <script src="script.js"></script>
 </body>

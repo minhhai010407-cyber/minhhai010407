@@ -1,20 +1,30 @@
-body {
+html, body {
   margin: 0;
+  padding: 0;
   overflow: hidden;
-  background: #000;
+  width: 100%;
+  height: 100%;
+}
+
+#aquarium-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
 #aquarium {
+  width: 1920px;  /* gốc thiết kế */
+  height: 1080px; /* gốc thiết kế */
+  transform-origin: top left;
   position: relative;
-  width: 100vw;
-  height: 100vh;
   background-image: url('images/anhnen.jpg');
   background-size: cover;
   background-position: center;
   transition: background-image 1s ease-in-out;
 }
 
-/* --- Cá và sinh vật --- */
+/* Cá và sinh vật */
 .fish {
   position: absolute;
   width: 140px;
@@ -25,15 +35,12 @@ body {
 
 #dolia {
   position: absolute;
-  width: 520px; /* Dolia to hơn */
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: 520px;
   z-index: 10;
   opacity: 0.95;
 }
 
-/* --- Nút điều khiển --- */
+/* Nút điều khiển */
 .controls {
   position: absolute;
   top: 25px;

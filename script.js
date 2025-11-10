@@ -3,26 +3,24 @@ const fishes = document.querySelectorAll(".fish");
 const dolia = document.getElementById("dolia");
 const music = document.getElementById("music");
 
-// --- Danh sách nền và nhạc ---
+// --- Danh sách nền & nhạc ---
 const bgList = [
   "images/anhnen.jpg",
   "images/anhnen2.jpg",
-  "images/anhnen3.jpg",
-  "images/anhnen4.jpg" // ✅ thêm nền mới
+  "images/anhnen3.jpg"
 ];
-
 const musicList = [
   "music/nhac1.mp3",
   "music/nhac2.mp3",
-  "music/nhac3.mp3" // ✅ thêm nhạc mới
+  "music/nhac3.mp3"
 ];
 
 let bgIndex = 0;
 let musicIndex = 0;
-let speedFactor = 0.6;
+let speedFactor = 0.5;
 let directions = [];
 
-// --- Tạo vị trí và hướng ban đầu cho sinh vật ---
+// --- Khởi tạo vị trí ngẫu nhiên ---
 fishes.forEach((fish, i) => {
   fish.style.left = `${Math.random() * (window.innerWidth - 150)}px`;
   fish.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
@@ -49,15 +47,16 @@ function moveDolia() {
   if (doliaX <= width / 2 || doliaX >= window.innerWidth - width / 2) doliaDX *= -1;
   if (doliaY <= height / 2 || doliaY >= window.innerHeight - height / 2) doliaDY *= -1;
 
-  dolia.style.transform = doliaDX > 0
-    ? `translate(-50%, -50%) scaleX(1)`
-    : `translate(-50%, -50%) scaleX(-1)`;
+  dolia.style.transform =
+    doliaDX > 0
+      ? `translate(-50%, -50%) scaleX(1)`
+      : `translate(-50%, -50%) scaleX(-1)`;
 
   dolia.style.left = `${doliaX}px`;
   dolia.style.top = `${doliaY}px`;
 }
 
-// --- Cá bơi ---
+// --- Cá di chuyển ---
 function animateFish() {
   fishes.forEach((fish, i) => {
     let rect = fish.getBoundingClientRect();
@@ -80,26 +79,14 @@ animateFish();
 // --- Đổi nền ---
 document.getElementById("changeBackground").addEventListener("click", () => {
   bgIndex = (bgIndex + 1) % bgList.length;
-  const newBg = bgList[bgIndex];
-
-  // kiểm tra có load được không
-  const img = new Image();
-  img.onload = () => {
-    aquarium.style.backgroundImage = `url('${newBg}')`;
-  };
-  img.onerror = () => {
-    console.error("Không tìm thấy nền:", newBg);
-  };
-  img.src = newBg;
+  aquarium.style.backgroundImage = `url('${bgList[bgIndex]}')`;
 });
 
 // --- Nhạc ---
 document.getElementById("toggleMusic").addEventListener("click", () => {
   if (music.paused) {
     music.src = musicList[musicIndex];
-    music.play().catch(() => {
-      alert("⚠️ Trình duyệt chặn autoplay, hãy nhấn nút phát lần nữa.");
-    });
+    music.play().catch(() => alert("⚠️ Trình duyệt chặn autoplay. Hãy nhấn lại!"));
     musicIndex = (musicIndex + 1) % musicList.length;
   } else {
     music.pause();
@@ -108,19 +95,19 @@ document.getElementById("toggleMusic").addEventListener("click", () => {
 
 // --- Tốc độ ---
 document.getElementById("speedUp").addEventListener("click", () => {
-  speedFactor *= 1.25;
+  speedFactor *= 1.2;
   updateSpeed();
 });
 
 document.getElementById("speedDown").addEventListener("click", () => {
-  speedFactor /= 1.25;
+  speedFactor /= 1.2;
   updateSpeed();
 });
 
 function updateSpeed() {
   fishes.forEach((_, i) => {
-    let signX = Math.sign(directions[i].dx);
-    let signY = Math.sign(directions[i].dy);
+    const signX = Math.sign(directions[i].dx);
+    const signY = Math.sign(directions[i].dy);
     directions[i].dx = signX * (Math.random() * 1 + 0.5) * speedFactor;
     directions[i].dy = signY * (Math.random() * 1 + 0.5) * speedFactor;
   });

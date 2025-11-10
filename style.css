@@ -14,10 +14,12 @@ html, body {
 }
 
 #aquarium {
-  width: 1920px;  /* gốc thiết kế */
-  height: 1080px; /* gốc thiết kế */
+  width: 1920px;
+  height: 1080px;
+  position: absolute;       /* để căn giữa */
+  top: 0;
+  left: 50%;
   transform-origin: top left;
-  position: relative;
   background-image: url('images/anhnen.jpg');
   background-size: cover;
   background-position: center;

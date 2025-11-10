@@ -14,16 +14,16 @@ body {
   overflow: hidden;
 }
 
-/* Cá và sinh vật */
+/* Cá & sinh vật */
 .fish {
   position: absolute;
-  width: 80px;
+  width: 90px;
   height: auto;
   user-select: none;
   pointer-events: none;
 }
 
-/* Dolia to ở giữa */
+/* Dolia */
 #dolia {
   position: absolute;
   width: 350px;
@@ -33,35 +33,32 @@ body {
   transform: translate(-50%, -50%);
   z-index: 10;
   opacity: 0.95;
-  animation: float 6s ease-in-out infinite alternate;
-}
-
-@keyframes float {
-  0% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-15px); }
-  100% { transform: translate(-50%, -50%) translateY(0); }
 }
 
 /* Nút điều khiển */
 .controls {
   position: absolute;
-  bottom: 15px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  z-index: 100;
 }
 
 button {
-  padding: 10px 15px;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid white;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
+  padding: 18px 28px;
+  background: rgba(0,0,0,0.6);
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 18px;
   font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.1);
 }

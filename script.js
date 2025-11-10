@@ -39,10 +39,12 @@ let doliaY = 540;
 let doliaDX = (Math.random() * 2 - 1) * 0.8;
 let doliaDY = (Math.random() * 2 - 1) * 0.8;
 
-// Scale aquarium cho vừa màn hình, căn giữa horizontal
+// Scale cover, căn giữa cả 2 chiều
 function scaleAquarium() {
-  const scaleY = aquariumWrapper.clientHeight / 1080;  // scale theo chiều cao
-  aquarium.style.transform = `translateX(-50%) scale(${scaleY})`;
+  const scaleX = aquariumWrapper.clientWidth / 1920;
+  const scaleY = aquariumWrapper.clientHeight / 1080;
+  const scale = Math.max(scaleX, scaleY); // cover → lấp đầy màn hình
+  aquarium.style.transform = `translate(-50%, -50%) scale(${scale})`;
 }
 
 window.addEventListener("load", scaleAquarium);
@@ -127,6 +129,3 @@ function updateSpeed() {
   doliaDX = signX * (Math.random() * 1 + 0.5) * speedFactor;
   doliaDY = signY * (Math.random() * 1 + 0.5) * speedFactor;
 }
-
-// Nút reset
-document.getElementById("reset").addEventListener("click", scaleAquarium);

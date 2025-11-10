@@ -8,7 +8,7 @@ const bgList = [
   "images/anhnen.jpg",
   "images/anhnen2.jpg",
   "images/anhnen3.jpg",
-  "images/anhnen4.png"
+  "images/anhnen4.jpg" // ✅ sửa đuôi .jpg
 ];
 const musicList = ["music/nhac1.mp3", "music/nhac2.mp3", "music/nhac3.mp3"];
 

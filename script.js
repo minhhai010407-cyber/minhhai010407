@@ -3,12 +3,14 @@ const fishes = document.querySelectorAll(".fish");
 const dolia = document.getElementById("dolia");
 const music = document.getElementById("music");
 
-// --- Danh sách nền & nhạc ---
+// Danh sách nền & nhạc
 const bgList = [
   "images/anhnen.jpg",
   "images/anhnen2.jpg",
-  "images/anhnen3.jpg"
+  "images/anhnen3.jpg",
+  "images/anhnen4.jpg"
 ];
+
 const musicList = [
   "music/nhac1.mp3",
   "music/nhac2.mp3",
@@ -17,13 +19,13 @@ const musicList = [
 
 let bgIndex = 0;
 let musicIndex = 0;
-let speedFactor = 0.5;
+let speedFactor = 0.4;
 let directions = [];
 
-// --- Khởi tạo vị trí ngẫu nhiên ---
+// --- Khởi tạo vị trí và hướng ngẫu nhiên ---
 fishes.forEach((fish, i) => {
-  fish.style.left = `${Math.random() * (window.innerWidth - 150)}px`;
-  fish.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
+  fish.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
+  fish.style.top = `${Math.random() * (window.innerHeight - 200)}px`;
 
   directions[i] = {
     dx: (Math.random() * 2 - 1) * speedFactor,
@@ -47,16 +49,15 @@ function moveDolia() {
   if (doliaX <= width / 2 || doliaX >= window.innerWidth - width / 2) doliaDX *= -1;
   if (doliaY <= height / 2 || doliaY >= window.innerHeight - height / 2) doliaDY *= -1;
 
+  dolia.style.left = `${doliaX}px`;
+  dolia.style.top = `${doliaY}px`;
   dolia.style.transform =
     doliaDX > 0
       ? `translate(-50%, -50%) scaleX(1)`
       : `translate(-50%, -50%) scaleX(-1)`;
-
-  dolia.style.left = `${doliaX}px`;
-  dolia.style.top = `${doliaY}px`;
 }
 
-// --- Cá di chuyển ---
+// --- Di chuyển các sinh vật ---
 function animateFish() {
   fishes.forEach((fish, i) => {
     let rect = fish.getBoundingClientRect();
@@ -86,7 +87,9 @@ document.getElementById("changeBackground").addEventListener("click", () => {
 document.getElementById("toggleMusic").addEventListener("click", () => {
   if (music.paused) {
     music.src = musicList[musicIndex];
-    music.play().catch(() => alert("⚠️ Trình duyệt chặn autoplay. Hãy nhấn lại!"));
+    music.play().catch(() =>
+      alert("⚠️ Trình duyệt chặn autoplay, hãy nhấn lại nút Nhạc.")
+    );
     musicIndex = (musicIndex + 1) % musicList.length;
   } else {
     music.pause();

@@ -3,21 +3,26 @@ const fishes = document.querySelectorAll(".fish");
 const dolia = document.getElementById("dolia");
 const music = document.getElementById("music");
 
-// --- Nền và nhạc ---
+// --- Danh sách nền và nhạc ---
 const bgList = [
   "images/anhnen.jpg",
   "images/anhnen2.jpg",
   "images/anhnen3.jpg",
-  "images/anhnen4.jpg" // ✅ sửa đuôi .jpg
+  "images/anhnen4.jpg" // ✅ thêm nền mới
 ];
-const musicList = ["music/nhac1.mp3", "music/nhac2.mp3", "music/nhac3.mp3"];
+
+const musicList = [
+  "music/nhac1.mp3",
+  "music/nhac2.mp3",
+  "music/nhac3.mp3" // ✅ thêm nhạc mới
+];
 
 let bgIndex = 0;
 let musicIndex = 0;
 let speedFactor = 0.6;
 let directions = [];
 
-// --- Khởi tạo vị trí và hướng ngẫu nhiên cho cá ---
+// --- Tạo vị trí và hướng ban đầu cho sinh vật ---
 fishes.forEach((fish, i) => {
   fish.style.left = `${Math.random() * (window.innerWidth - 150)}px`;
   fish.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
@@ -28,7 +33,7 @@ fishes.forEach((fish, i) => {
   };
 });
 
-// --- Dolia di chuyển nhẹ khắp hồ ---
+// --- Dolia di chuyển ---
 let doliaX = window.innerWidth / 2;
 let doliaY = window.innerHeight / 2;
 let doliaDX = (Math.random() * 2 - 1) * 0.25;
@@ -75,21 +80,33 @@ animateFish();
 // --- Đổi nền ---
 document.getElementById("changeBackground").addEventListener("click", () => {
   bgIndex = (bgIndex + 1) % bgList.length;
-  aquarium.style.backgroundImage = `url('${bgList[bgIndex]}')`;
+  const newBg = bgList[bgIndex];
+
+  // kiểm tra có load được không
+  const img = new Image();
+  img.onload = () => {
+    aquarium.style.backgroundImage = `url('${newBg}')`;
+  };
+  img.onerror = () => {
+    console.error("Không tìm thấy nền:", newBg);
+  };
+  img.src = newBg;
 });
 
-// --- Phát / Dừng nhạc ---
+// --- Nhạc ---
 document.getElementById("toggleMusic").addEventListener("click", () => {
   if (music.paused) {
     music.src = musicList[musicIndex];
-    music.play();
+    music.play().catch(() => {
+      alert("⚠️ Trình duyệt chặn autoplay, hãy nhấn nút phát lần nữa.");
+    });
     musicIndex = (musicIndex + 1) % musicList.length;
   } else {
     music.pause();
   }
 });
 
-// --- Điều chỉnh tốc độ ---
+// --- Tốc độ ---
 document.getElementById("speedUp").addEventListener("click", () => {
   speedFactor *= 1.25;
   updateSpeed();

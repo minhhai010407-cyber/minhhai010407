@@ -20,7 +20,7 @@ const musicList = [
 
 let bgIndex = 0;
 let musicIndex = 0;
-let speedFactor = 1.2; // tốc độ ban đầu nhanh hơn
+let speedFactor = 1.2; // tốc độ ban đầu nhanh
 let directions = [];
 
 // Khởi tạo cá
@@ -36,15 +36,13 @@ fishes.forEach((fish, i) => {
 // Dolia
 let doliaX = 960;
 let doliaY = 540;
-let doliaDX = (Math.random() * 2 - 1) * 0.8; // nhanh hơn
+let doliaDX = (Math.random() * 2 - 1) * 0.8;
 let doliaDY = (Math.random() * 2 - 1) * 0.8;
 
-// Scale aquarium cho vừa màn hình
+// Scale aquarium cho vừa màn hình, căn giữa horizontal
 function scaleAquarium() {
-  const scaleX = aquariumWrapper.clientWidth / 1920;
-  const scaleY = aquariumWrapper.clientHeight / 1080;
-  const scale = Math.min(scaleX, scaleY);
-  aquarium.style.transform = `scale(${scale})`;
+  const scaleY = aquariumWrapper.clientHeight / 1080;  // scale theo chiều cao
+  aquarium.style.transform = `translateX(-50%) scale(${scaleY})`;
 }
 
 window.addEventListener("load", scaleAquarium);

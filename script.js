@@ -1,21 +1,26 @@
 const aquarium = document.getElementById("aquarium");
 const fishes = document.querySelectorAll(".fish");
 const dolia = document.getElementById("dolia");
-const music1 = document.getElementById("music1");
-const music2 = document.getElementById("music2");
+const music = document.getElementById("music");
 
-const bgList = ["images/anhnen.jpg", "images/anhnen2.jpg", "images/anhnen3.jpg"];
+// --- Nền và nhạc ---
+const bgList = [
+  "images/anhnen.jpg",
+  "images/anhnen2.jpg",
+  "images/anhnen3.jpg",
+  "images/anhnen4.png"
+];
+const musicList = ["music/nhac1.mp3", "music/nhac2.mp3", "music/nhac3.mp3"];
+
 let bgIndex = 0;
-
-let speedFactor = 0.7; // tốc độ cơ bản
+let musicIndex = 0;
+let speedFactor = 0.6;
 let directions = [];
 
-let musicState = 0; // 0 = tắt, 1 = nhạc 1, 2 = nhạc 2
-
-// --- Khởi tạo vị trí & hướng ---
+// --- Khởi tạo vị trí và hướng ngẫu nhiên cho cá ---
 fishes.forEach((fish, i) => {
-  fish.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
-  fish.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
+  fish.style.left = `${Math.random() * (window.innerWidth - 150)}px`;
+  fish.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
 
   directions[i] = {
     dx: (Math.random() * 2 - 1) * speedFactor,
@@ -23,11 +28,11 @@ fishes.forEach((fish, i) => {
   };
 });
 
-// --- Dolia di chuyển ---
+// --- Dolia di chuyển nhẹ khắp hồ ---
 let doliaX = window.innerWidth / 2;
 let doliaY = window.innerHeight / 2;
-let doliaDX = (Math.random() * 2 - 1) * 0.8;
-let doliaDY = (Math.random() * 2 - 1) * 0.8;
+let doliaDX = (Math.random() * 2 - 1) * 0.25;
+let doliaDY = (Math.random() * 2 - 1) * 0.25;
 
 function moveDolia() {
   doliaX += doliaDX;
@@ -39,9 +44,12 @@ function moveDolia() {
   if (doliaX <= width / 2 || doliaX >= window.innerWidth - width / 2) doliaDX *= -1;
   if (doliaY <= height / 2 || doliaY >= window.innerHeight - height / 2) doliaDY *= -1;
 
+  dolia.style.transform = doliaDX > 0
+    ? `translate(-50%, -50%) scaleX(1)`
+    : `translate(-50%, -50%) scaleX(-1)`;
+
   dolia.style.left = `${doliaX}px`;
   dolia.style.top = `${doliaY}px`;
-  dolia.style.transform = doliaDX > 0 ? "scaleX(1)" : "scaleX(-1)";
 }
 
 // --- Cá bơi ---
@@ -70,30 +78,28 @@ document.getElementById("changeBackground").addEventListener("click", () => {
   aquarium.style.backgroundImage = `url('${bgList[bgIndex]}')`;
 });
 
-// --- Nhạc ---
-document.getElementById("toggleMusic").addEventListener("click", async () => {
-  try {
-    if (musicState === 0) {
-      await music1.play();
-      music2.pause();
-      music1.currentTime = 0;
-      musicState = 1;
-    } else if (musicState === 1) {
-      music1.pause();
-      await music2.play();
-      music2.currentTime = 0;
-      musicState = 2;
-    } else {
-      music1.pause();
-      music2.pause();
-      musicState = 0;
-    }
-  } catch (error) {
-    alert("⚠️ Trình duyệt đang chặn phát nhạc. Bấm lại nút để phát nhé!");
+// --- Phát / Dừng nhạc ---
+document.getElementById("toggleMusic").addEventListener("click", () => {
+  if (music.paused) {
+    music.src = musicList[musicIndex];
+    music.play();
+    musicIndex = (musicIndex + 1) % musicList.length;
+  } else {
+    music.pause();
   }
 });
 
-// --- Tốc độ ---
+// --- Điều chỉnh tốc độ ---
+document.getElementById("speedUp").addEventListener("click", () => {
+  speedFactor *= 1.25;
+  updateSpeed();
+});
+
+document.getElementById("speedDown").addEventListener("click", () => {
+  speedFactor /= 1.25;
+  updateSpeed();
+});
+
 function updateSpeed() {
   fishes.forEach((_, i) => {
     let signX = Math.sign(directions[i].dx);
@@ -101,16 +107,4 @@ function updateSpeed() {
     directions[i].dx = signX * (Math.random() * 1 + 0.5) * speedFactor;
     directions[i].dy = signY * (Math.random() * 1 + 0.5) * speedFactor;
   });
-  doliaDX *= speedFactor;
-  doliaDY *= speedFactor;
 }
-
-document.getElementById("speedUp").addEventListener("click", () => {
-  speedFactor *= 1.2;
-  updateSpeed();
-});
-
-document.getElementById("speedDown").addEventListener("click", () => {
-  speedFactor /= 1.2;
-  updateSpeed();
-});

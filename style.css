@@ -44,14 +44,15 @@ html, body {
 
 /* Nút điều khiển */
 .controls {
-  position: absolute;
-  top: 25px;
+  position: fixed;    /* thay absolute → fixed */
+  top: 10px;          /* cách mép trên viewport, tránh URL/Bookmark che */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 25px;
-  z-index: 20;
+  z-index: 999;       /* đảm bảo nổi trên aquarium */
 }
+
 
 button {
   padding: 22px 36px;
@@ -71,3 +72,4 @@ button:hover {
   background: rgba(255, 255, 255, 0.25);
   transform: scale(1.1);
 }
+

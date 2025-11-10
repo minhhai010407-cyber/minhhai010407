@@ -3,7 +3,7 @@ const fishes = document.querySelectorAll(".fish");
 const dolia = document.getElementById("dolia");
 const music = document.getElementById("music");
 
-// Danh sách nền & nhạc
+// --- Danh sách nền & nhạc ---
 const bgList = [
   "images/anhnen.jpg",
   "images/anhnen2.jpg",
@@ -24,52 +24,63 @@ let directions = [];
 
 // --- Khởi tạo vị trí và hướng ngẫu nhiên ---
 fishes.forEach((fish, i) => {
-  fish.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
-  fish.style.top = `${Math.random() * (window.innerHeight - 200)}px`;
-
+  fish.style.left = `${Math.random() * window.innerWidth}px`;
+  fish.style.top = `${Math.random() * window.innerHeight}px`;
   directions[i] = {
     dx: (Math.random() * 2 - 1) * speedFactor,
     dy: (Math.random() * 2 - 1) * speedFactor
   };
 });
 
-// --- Dolia di chuyển ---
-let doliaX = window.innerWidth / 2;
-let doliaY = window.innerHeight / 2;
+// --- Dolia tự do ---
+let doliaX = Math.random() * window.innerWidth;
+let doliaY = Math.random() * window.innerHeight;
 let doliaDX = (Math.random() * 2 - 1) * 0.25;
 let doliaDY = (Math.random() * 2 - 1) * 0.25;
 
 function moveDolia() {
+  // Cập nhật vị trí
   doliaX += doliaDX;
   doliaY += doliaDY;
 
-  const width = dolia.clientWidth;
-  const height = dolia.clientHeight;
-
-  if (doliaX <= width / 2 || doliaX >= window.innerWidth - width / 2) doliaDX *= -1;
-  if (doliaY <= height / 2 || doliaY >= window.innerHeight - height / 2) doliaDY *= -1;
+  // Nếu ra ngoài màn hình, quay hướng ngẫu nhiên
+  if (doliaX < -dolia.clientWidth) doliaX = window.innerWidth + dolia.clientWidth;
+  if (doliaX > window.innerWidth + dolia.clientWidth) doliaX = -dolia.clientWidth;
+  if (doliaY < -dolia.clientHeight) doliaY = window.innerHeight + dolia.clientHeight;
+  if (doliaY > window.innerHeight + dolia.clientHeight) doliaY = -dolia.clientHeight;
 
   dolia.style.left = `${doliaX}px`;
   dolia.style.top = `${doliaY}px`;
   dolia.style.transform =
-    doliaDX > 0
+    doliaDX >= 0
       ? `translate(-50%, -50%) scaleX(1)`
       : `translate(-50%, -50%) scaleX(-1)`;
+
+  // Thay đổi hướng ngẫu nhiên nhỏ để di chuyển tự nhiên
+  doliaDX += (Math.random() - 0.5) * 0.02;
+  doliaDY += (Math.random() - 0.5) * 0.02;
 }
 
-// --- Di chuyển các sinh vật ---
+// --- Cá di chuyển tự do ---
 function animateFish() {
   fishes.forEach((fish, i) => {
     let rect = fish.getBoundingClientRect();
     let x = rect.left + directions[i].dx;
     let y = rect.top + directions[i].dy;
 
-    if (x <= 0 || x >= window.innerWidth - rect.width) directions[i].dx *= -1;
-    if (y <= 0 || y >= window.innerHeight - rect.height) directions[i].dy *= -1;
+    // Nếu ra ngoài màn hình, cho xuất hiện bên đối diện
+    if (x < -rect.width) x = window.innerWidth;
+    if (x > window.innerWidth) x = -rect.width;
+    if (y < -rect.height) y = window.innerHeight;
+    if (y > window.innerHeight) y = -rect.height;
 
     fish.style.left = `${x}px`;
     fish.style.top = `${y}px`;
-    fish.style.transform = directions[i].dx > 0 ? "scaleX(1)" : "scaleX(-1)";
+    fish.style.transform = directions[i].dx >= 0 ? "scaleX(1)" : "scaleX(-1)";
+
+    // Thay đổi hướng ngẫu nhiên nhỏ
+    directions[i].dx += (Math.random() - 0.5) * 0.02 * speedFactor;
+    directions[i].dy += (Math.random() - 0.5) * 0.02 * speedFactor;
   });
 
   moveDolia();
@@ -96,22 +107,11 @@ document.getElementById("toggleMusic").addEventListener("click", () => {
   }
 });
 
-// --- Tốc độ ---
+// --- Tăng/giảm tốc ---
 document.getElementById("speedUp").addEventListener("click", () => {
   speedFactor *= 1.2;
-  updateSpeed();
 });
 
 document.getElementById("speedDown").addEventListener("click", () => {
   speedFactor /= 1.2;
-  updateSpeed();
 });
-
-function updateSpeed() {
-  fishes.forEach((_, i) => {
-    const signX = Math.sign(directions[i].dx);
-    const signY = Math.sign(directions[i].dy);
-    directions[i].dx = signX * (Math.random() * 1 + 0.5) * speedFactor;
-    directions[i].dy = signY * (Math.random() * 1 + 0.5) * speedFactor;
-  });
-}

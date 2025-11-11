@@ -1,32 +1,28 @@
+/* --- RESET CƠ BẢN --- */
 html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
   width: 100%;
   height: 100%;
+  background: #000;
+  font-family: sans-serif;
+  padding-top: 60px; /* tạo khoảng trống an toàn tránh bị thanh URL che */
 }
 
-#aquarium-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
+/* --- HỒ CÁ --- */
 #aquarium {
-  width: 1920px;
-  height: 1080px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: center center; /* scale từ giữa */
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 60px); /* trừ phần top để hiển thị đúng tỉ lệ */
   background-image: url('images/anhnen.jpg');
   background-size: cover;
   background-position: center;
   transition: background-image 1s ease-in-out;
+  overflow: hidden;
 }
 
-/* Cá và sinh vật */
+/* --- SINH VẬT --- */
 .fish {
   position: absolute;
   width: 140px;
@@ -37,25 +33,24 @@ html, body {
 
 #dolia {
   position: absolute;
-  width: 520px;
+  width: 520px; /* Dolia to hơn */
   z-index: 10;
   opacity: 0.95;
 }
 
-/* Nút điều khiển */
+/* --- NÚT ĐIỀU KHIỂN --- */
 .controls {
-  position: fixed;    /* thay absolute → fixed */
-  top: 10px;          /* cách mép trên viewport, tránh URL/Bookmark che */
+  position: fixed;   /* cố định, không bị ảnh hưởng bởi scale hoặc transform */
+  top: 15px;         /* cách mép trên để tránh bị thanh URL che */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 25px;
-  z-index: 999;       /* đảm bảo nổi trên aquarium */
+  z-index: 999;
 }
 
-
 button {
-  padding: 22px 36px;
+  padding: 20px 36px;
   font-size: 22px;
   background: rgba(0, 0, 0, 0.55);
   border: 3px solid white;
@@ -73,3 +68,23 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* --- ĐẢM BẢO RESPONSIVE & FULL MÀN HÌNH --- */
+@media (max-width: 768px) {
+  button {
+    font-size: 16px;
+    padding: 14px 22px;
+  }
+
+  .controls {
+    top: 10px;
+    gap: 15px;
+  }
+
+  #dolia {
+    width: 350px;
+  }
+
+  .fish {
+    width: 100px;
+  }
+}

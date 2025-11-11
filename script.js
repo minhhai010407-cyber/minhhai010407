@@ -129,3 +129,4 @@ function updateSpeed() {
   doliaDX = signX * (Math.random() * 1 + 0.5) * speedFactor;
   doliaDY = signY * (Math.random() * 1 + 0.5) * speedFactor;
 }
+

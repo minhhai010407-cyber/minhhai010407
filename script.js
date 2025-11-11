@@ -21,12 +21,17 @@ let bgIndex = 0;
 let musicIndex = 0;
 let speedFactor = 0.4;
 let directions = [];
+let positions = [];
 
 // --- Khởi tạo vị trí và hướng ngẫu nhiên ---
 fishes.forEach((fish, i) => {
-  fish.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
-  fish.style.top = `${Math.random() * (window.innerHeight - 200)}px`;
+  const startX = Math.random() * (window.innerWidth - 200);
+  const startY = Math.random() * (window.innerHeight - 200);
 
+  fish.style.left = `${startX}px`;
+  fish.style.top = `${startY}px`;
+
+  positions[i] = { x: startX, y: startY };
   directions[i] = {
     dx: (Math.random() * 2 - 1) * speedFactor,
     dy: (Math.random() * 2 - 1) * speedFactor
@@ -60,21 +65,40 @@ function moveDolia() {
 // --- Di chuyển các sinh vật ---
 function animateFish() {
   fishes.forEach((fish, i) => {
-    let rect = fish.getBoundingClientRect();
-    let x = rect.left + directions[i].dx;
-    let y = rect.top + directions[i].dy;
+    const rectWidth = fish.clientWidth;
+    const rectHeight = fish.clientHeight;
 
-    if (x <= 0 || x >= window.innerWidth - rect.width) directions[i].dx *= -1;
-    if (y <= 0 || y >= window.innerHeight - rect.height) directions[i].dy *= -1;
+    positions[i].x += directions[i].dx;
+    positions[i].y += directions[i].dy;
 
-    fish.style.left = `${x}px`;
-    fish.style.top = `${y}px`;
+    // --- Va chạm biên ---
+    if (positions[i].x <= 0) {
+      positions[i].x = 0;
+      directions[i].dx *= -1;
+    }
+    if (positions[i].x >= window.innerWidth - rectWidth) {
+      positions[i].x = window.innerWidth - rectWidth;
+      directions[i].dx *= -1;
+    }
+
+    if (positions[i].y <= 0) {
+      positions[i].y = 0;
+      directions[i].dy *= -1;
+    }
+    if (positions[i].y >= window.innerHeight - rectHeight) {
+      positions[i].y = window.innerHeight - rectHeight;
+      directions[i].dy *= -1;
+    }
+
+    fish.style.left = `${positions[i].x}px`;
+    fish.style.top = `${positions[i].y}px`;
     fish.style.transform = directions[i].dx > 0 ? "scaleX(1)" : "scaleX(-1)";
   });
 
   moveDolia();
   requestAnimationFrame(animateFish);
 }
+
 animateFish();
 
 // --- Đổi nền ---
